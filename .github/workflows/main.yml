@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Run tests
-        run: npm test
+        run: npx playwright test --reporter=list
 
       - name: Upload Allure Report Data
         if: always()  # Ensure this runs even if previous steps fail
@@ -43,16 +43,14 @@ jobs:
       - name: Generate Allure Report
         run: npx allure generate allure-results --clean -o allure-report
 
-      - name: Upload Allure Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-report
-          path: allure-report
-
       - name: Push Allure Report to `gh-pages` branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Set up git
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          
           # Check out the `gh-pages` branch
           git fetch origin gh-pages
           git worktree add gh-pages gh-pages
@@ -78,6 +76,6 @@ jobs:
         with:
           route: PATCH /repos/${{ github.repository }}
           repo: ${{ github.repository }}
-          description: 'Allure Report: https://github.com/borderForNoone/PLAYWRIGHT/'
+          description: 'Allure Report: https://borderForNoone.github.io/PLAYWRIGHT/'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
