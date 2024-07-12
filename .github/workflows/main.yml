@@ -78,7 +78,7 @@ jobs:
           publish_dir: ./allure-report
 
       - name: Update GitHub Pages URL in Repo Description
-        uses: octokit/request-action@v2
+        uses: octokit/request-action@v3
         with:
           route: PATCH /repos/${{ github.repository }}
           repo: ${{ github.repository }}
