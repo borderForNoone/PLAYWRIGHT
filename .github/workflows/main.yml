@@ -23,29 +23,26 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
+        run: npm install
+
+      - name: Install dependencies
         run: |
           npm install
           sudo apt-get update
           sudo apt-get install -y \
-            libwoff2-dev \
-            libvpx-dev \
-            libevent-dev \
-            libopus-dev \
-            libgstreamer1.0-dev \
-            libgstreamer-plugins-base1.0-dev \
-            libharfbuzz-dev \
-            libhyphen-dev \
-            libmanette-0.2-dev \
+            libwoff2-encoder1 \
+            libvpx6 \
+            libevent-2.1-7 \
+            libopus0 \
+            libgstreamer1.0-0 \
+            libgstreamer-plugins-base1.0-0 \
+            libharfbuzz0b \
+            libhyphen0 \
+            libmanette-0.2-0 \
             flite \
             libflite1 \
-            libflite-cmu_us_awb1 \
-            libflite-cmu_us_kal1 \
-            libflite-cmu_us_slt1 \
             libgles2-mesa-dev \
             libx264-dev
-
-      - name: Install Playwright Browsers
-        run: npx playwright install
 
       - name: Run tests
         run: npm test
