@@ -30,7 +30,6 @@ jobs:
           npm install
           sudo apt-get update
           sudo apt-get install -y \
-            libwoff2-dev \
             libvpx-dev \
             libevent-dev \
             libopus-dev \
