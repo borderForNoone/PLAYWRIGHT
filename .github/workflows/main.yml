@@ -78,6 +78,6 @@ jobs:
         with:
           route: PATCH /repos/${{ github.repository }}
           repo: ${{ github.repository }}
-          description: 'Allure Report: https://your-username.github.io/your-repo/'
+          description: 'Allure Report: https://github.com/borderForNoone/PLAYWRIGHT/'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
