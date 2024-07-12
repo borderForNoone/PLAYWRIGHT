@@ -28,42 +28,8 @@ jobs:
       - name: Download Browsers
         run: npx playwright install
 
-      - name: Install missing libraries
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwoff2-ldbl \
-            libvpx6 \
-            libevent-2.1-7 \
-            libopus0 \
-            libgstreamer-plugins-base1.0-0 \
-            libgstreamer1.0-0 \
-            libharfbuzz0b \
-            libhyphen0 \
-            libmanette-0.2-0 \
-            libflite1 \
-            libgles2-mesa \
-            libx264-160 \
-            libdbus-1-3 \
-            libnss3 \
-            libatk-bridge2.0-0 \
-            libgtk-3-0 \
-            libdrm2 \
-            libxdamage1 \
-            libxrandr2 \
-            libxcomposite1 \
-            libx11-xcb1 \
-            libxcb-dri3-0 \
-            libxcb-glx0 \
-            libxshmfence1 \
-            libpci3 \
-            libgbm1
-
       - name: Run tests
         run: npx playwright test --reporter=list
-
-      - name: List Allure Results Directory
-        run: ls -la allure-results
 
       - name: Upload Allure Report Data
         if: always()  # Ensure this runs even if previous steps fail
@@ -71,6 +37,11 @@ jobs:
         with:
           name: allure-results
           path: allure-results
+
+      - name: Download Allure Report Data from Previous Runs
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-results
 
       - name: Generate Allure Report
         run: npx allure generate allure-results --clean -o allure-report
