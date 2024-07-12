@@ -28,6 +28,23 @@ jobs:
       - name: Download Browsers
         run: npx playwright install
 
+      - name: Install missing libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwoff2-dev \
+            libvpx-dev \
+            libevent-dev \
+            libopus-dev \
+            libgstreamer-plugins-base1.0-dev \
+            libgstreamer1.0-dev \
+            libharfbuzz-dev \
+            libhyphen-dev \
+            libmanette-0.2-dev \
+            libflite1 \
+            libflite-dev \
+            libgles2-mesa-dev \
+
       - name: Run tests
         run: npx playwright test --reporter=list
 
