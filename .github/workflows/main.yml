@@ -29,7 +29,7 @@ jobs:
         run: npx playwright install
 
       - name: Run tests
-        run: npx playwright test --reporter=list
+        run: npx playwright test --reporter=list --workers=3 
 
       - name: Upload Allure Report Data
         if: always()  # Ensure this runs even if previous steps fail
