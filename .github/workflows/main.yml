@@ -23,7 +23,26 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwoff2-dev \
+            libvpx-dev \
+            libevent-dev \
+            libopus-dev \
+            libgstreamer1.0-dev \
+            libgstreamer-plugins-base1.0-dev \
+            libharfbuzz-dev \
+            libhyphen-dev \
+            libmanette-0.2-dev \
+            flite \
+            libflite1 \
+            libflite-cmu_us_awb1 \
+            libflite-cmu_us_kal1 \
+            libflite-cmu_us_slt1 \
+            libgles2-mesa-dev \
+            libx264-dev
 
       - name: Install Playwright Browsers
         run: npx playwright install
@@ -60,13 +79,11 @@ jobs:
           publish_dir: ./allure-report
           
       - name: Install GitHub CLI
-        run: sudo apt-get install gh
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
 
       - name: Update GitHub Pages URL in Repo Description
-        run: |
-          curl -X PATCH "https://api.github.com/repos/${{ github.repository }}" \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          -d '{"description": "Allure Report: https://borderForNoone.github.io/PLAYWRIGHT/"}'
+        run: gh repo edit --description 'Allure Report: https://borderForNoone.github.io/PLAYWRIGHT/'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
