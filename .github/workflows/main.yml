@@ -63,7 +63,7 @@ jobs:
 
       - name: Push Allure Report to gh-pages branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Set up git
           git config --global user.email "deniska2002kulikov@gmail.com"
@@ -85,15 +85,15 @@ jobs:
       - name: Set up GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./allure-report
 
       - name: Update GitHub Pages URL in Repo Description
         run: |
           curl -X PATCH "https://api.github.com/repos/${{ github.repository }}" \
-          -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
-          -d '{"description": "Allure Report: git@github.com:borderForNoone/PLAYWRIGHT.git"}'
+          -d '{"description": "Allure Report: https://borderForNoone.github.io/PLAYWRIGHT/"}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
