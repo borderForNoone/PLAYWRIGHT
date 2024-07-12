@@ -59,6 +59,9 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./allure-report
           
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
+
       - name: Update GitHub Pages URL in Repo Description
         run: gh repo edit --description 'Allure Report: https://borderForNoone.github.io/PLAYWRIGHT/'
         env:
