@@ -66,8 +66,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Set up git
-          git config --global user.email "deniska2002kulikov@gmail.com"
-          git config --global user.name "borderForNoone"
+          user_info=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/user)
+          echo "::set-output name=email::$(echo $user_info | jq -r '.email')"
+          echo "::set-output name=username::$(echo $user_info | jq -r '.login')"
           
           # Check out the gh-pages branch
           git fetch origin gh-pages || git checkout --orphan gh-pages
