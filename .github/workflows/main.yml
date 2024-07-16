@@ -29,6 +29,17 @@ jobs:
       - name: Run tests
         run: npx playwright test
 
+      - name: Prepare Allure Report Directory
+        run: mkdir -p reports/allure-report
+
+      - name: Copy Allure Results
+        if: always()  # Ensure this step runs even if tests fail
+        run: |
+          cp -r allure-results/* reports/allure-report/
+
+      - name: Generate Allure Report
+        run: npx allure-cli generate --clean --output reports/allure-report
+
       - name: Deploy report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -42,4 +53,3 @@ jobs:
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github.v3+json" \
           -d '{"description": "Allure Report: https://borderForNoone.github.io/PLAYWRIGHT/"}'
-          
