@@ -65,9 +65,18 @@ jobs:
           git commit -m "Update Allure report"
           git push origin gh-pages
 
-      - name: Generate GitHub Pages Link
-        id: pages_link
-        run: echo "REPO_URL=https://$(echo ${GITHUB_REPOSITORY} | sed -e 's/\//./')/gh-pages/" >> $GITHUB_ENV
+      - name: Set up GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./allure-report
 
-      - name: Output GitHub Pages Link
-        run: echo "The latest Allure report is available at ${{ env.REPO_URL }}"
+      - name: Update GitHub Pages URL in Repo Description
+        run: |
+          curl -X PATCH "https://api.github.com/repos/${{ github.repository }}" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          -d '{"description": "Allure Report: https://borderForNoone.github.io/PLAYWRIGHT/"}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
