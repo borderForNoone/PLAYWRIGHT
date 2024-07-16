@@ -50,16 +50,16 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git checkout -b gh-pages
-          rm -rf *
+          git fetch origin gh-pages || git checkout --orphan gh-pages
+          git reset --hard
           cp -r allure-report/* .
           git add .
           git commit -m "Add Allure report"
           git push -f origin gh-pages
 
-      - name: Update Repository Description
-        uses: peter-evans/repository-description@v2
-        with:
-          description: 'The latest Allure report is available at https://<username>.github.io/<repo>/'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate GitHub Pages Link
+        id: pages_link
+        run: echo "REPO_URL=https://$(echo ${GITHUB_REPOSITORY} | sed -e 's/\//./')/gh-pages/" >> $GITHUB_ENV
+
+      - name: Output GitHub Pages Link
+        run: echo "The latest Allure report is available at ${{ env.REPO_URL }}"
