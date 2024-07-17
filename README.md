@@ -18,7 +18,7 @@ npx playwright test
 
 # Report
 
-The report is generated in the file `target/surefire-reports/index.html`.
+The report is generated in the file `index.html`.
 
 # CI
 

@@ -4,7 +4,7 @@ class Page {
     }
 
     async open(path) {
-        await this.page.goto(`https://www.redmine.org${path}`);
+        await this.page.goto(`/${path}`);
     }
 
     get searchField() {

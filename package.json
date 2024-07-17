@@ -7,11 +7,11 @@
     "allure:generate": "npx allure generate allure-results --clean -o allure-report",
     "allure:serve": "npx allure serve allure-results"
   },
-  "keywords": [],
+  "keywords": ["playwright", "testing", "allure", "test-report"],
   "type": "commonjs",
   "author": "DenysKulikov",
   "license": "ISC",
-  "description": "",
+  "description": "A project setup for end-to-end testing using Playwright and generating test reports with Allure.",
   "devDependencies": {
     "@playwright/test": "^1.45.1",
     "@types/node": "^20.14.10",

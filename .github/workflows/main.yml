@@ -29,18 +29,6 @@ jobs:
       - name: Run tests
         run: npx playwright test --reporter=allure-playwright
 
-      - name: Upload Allure Report Data
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-results
-          path: allure-results
-
-      - name: Download Allure Report Data
-        uses: actions/download-artifact@v3
-        with:
-          name: allure-results
-          path: allure-results
-
       - name: Generate Allure Report
         run: npx allure generate allure-results --clean -o allure-report
 

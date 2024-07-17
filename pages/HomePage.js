@@ -8,14 +8,6 @@ class HomePage extends Page {
     async open() {
         await super.open('/');
     }
-
-    async search(query) {
-        await super.search(query);
-    }
-
-    async clickRegistrationButton() {
-        await super.clickRegistrationButton();
-    }
 }
 
 module.exports = HomePage;
