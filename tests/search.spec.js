@@ -16,6 +16,5 @@ test('Search for a query', async ({ page }) => {
   const searchFieldValue = await searchPage.getSearchFieldValue();
   expect(searchFieldValue).toBe('ASDASDASDADASD');
 
-  const headingText = await searchPage.getSearchResultsHeadingText();
-  expect(headingText).toContain('Results (0)'); 
+  expect(await searchPage.searchResultsHeading.textContent()).toContain('Results (0)'); 
 });

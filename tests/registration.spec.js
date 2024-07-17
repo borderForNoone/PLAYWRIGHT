@@ -12,12 +12,9 @@ test('Check that the error message appears when register with invalid values', a
   const homePage = new HomePage(page);
 
   await homePage.clickRegistrationButton();
-  await registrationPage.clickSubmitButton();
+  await registrationPage.submitButton.click();
 
-  await registrationPage.waitForErrorMessage();
-
-  const isErrorVisible = await registrationPage.errorMessage.isVisible();
-  expect(isErrorVisible).toBe(true);
+  expect(await registrationPage.errorMessage.isVisible()).toBe(true);
 });
 
 test('Short password should show error message', async ({ page }) => {
@@ -31,16 +28,12 @@ test('Short password should show error message', async ({ page }) => {
   expect(await registrationPage.usernameInput.inputValue()).toBe('testuser');
   expect(await registrationPage.emailInput.inputValue()).toBe('test@example.com');
 
-  expect(await registrationPage.isPasswordHidden()).toBe(true);
-  expect(await registrationPage.isPasswordConfirmationHidden()).toBe(true);
+  await expect(registrationPage.passwordInput).toHaveAttribute('type', 'password');
+  await expect(registrationPage.passwordConfirmationInput).toHaveAttribute('type', 'password');
 
-  await registrationPage.waitForErrorMessage();
+  expect(await registrationPage.errorMessage.isVisible()).toBe(true);
 
-  const isErrorVisible = await registrationPage.errorMessage.isVisible();
-  expect(isErrorVisible).toBe(true);
-
-  const errorMessageText = await registrationPage.getErrorMessageText();
-  expect(errorMessageText).toContain('Password is too short (minimum is 8 characters)');
+  expect(await registrationPage.errorMessage.textContent()).toContain('Password is too short (minimum is 8 characters)');
 });
 
 test('A long nickname should cause an error', async ({ page }) => {
@@ -59,14 +52,10 @@ test('A long nickname should cause an error', async ({ page }) => {
   expect(await registrationPage.usernameInput.inputValue()).toBe('a'.repeat(61));
   expect(await registrationPage.emailInput.inputValue()).toBe('email@example.com');
 
-  expect(await registrationPage.isPasswordHidden()).toBe(true);
-  expect(await registrationPage.isPasswordConfirmationHidden()).toBe(true);
+  await expect(registrationPage.passwordInput).toHaveAttribute('type', 'password');
+  await expect(registrationPage.passwordConfirmationInput).toHaveAttribute('type', 'password');
 
-  await registrationPage.waitForErrorMessage();
+  expect(await registrationPage.errorMessage.isVisible()).toBe(true);
 
-  const isErrorVisible = await registrationPage.errorMessage.isVisible();
-  expect(isErrorVisible).toBe(true);
-
-  const errorMessageText = await registrationPage.getErrorMessageText();
-  expect(errorMessageText).toContain('Login is too long (maximum is 60 characters)');
+  expect(await registrationPage.getErrorMessageText()).toContain('Login is too long (maximum is 60 characters)');
 });

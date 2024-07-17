@@ -1,27 +1,19 @@
 class Page {
     constructor(page) {
         this.page = page;
+
+        this.searchField = page.locator('#q');
+        this.loginButton = page.locator('a[class="login"]');
+        this.registrationButton = page.locator('a[class = "register"]');
     }
 
     async open(path) {
-        await this.page.goto(`/${path}`);
-    }
-
-    get searchField() {
-        return this.page.locator('#q');
+        await this.page.goto(`${path}`);
     }
 
     async search(query) {
         await this.searchField.fill(query);
         await this.searchField.press('Enter');
-    }
-
-    get loginButton() {
-        return this.page.locator('a[class="login"]');
-    }
-
-    get registrationButton() {
-        return this.page.locator('a[class = "register"]');
     }
 
     async clickLoginButton() {
